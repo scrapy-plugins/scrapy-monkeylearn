@@ -57,7 +57,20 @@ class MonkeyLearnPipeline(object):
                               expected_type=str,
                               found_type=type(self.classifier)
 
+        if not isinstance(self.auth_token, str):
+            raise ConfigError(option_name=ML_AUTH,
+                              expected_type=str,
+                              found_type=type(self.auth_token))
 
+        if not isinstance(self.classifier_fields, list):
+            raise ConfigError(option_name=ML_CLASSIFY_FIELDS,
+                              expected_type=list,
+                              found_type=type(self.classifier_fields))
+
+        if not isinstance(self.category_field, str):
+            raise ConfigError(option_name=ML_CATEGORY_FIELD,
+                              expected_type=str,
+                              found_type=type(self.category_field))
 
     def process_item(self, item, spider):
         "Classify an item."
