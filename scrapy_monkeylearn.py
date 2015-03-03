@@ -6,7 +6,7 @@ CLASSIFY_TEXT_URL = 'https://api.monkeylearn.com/api/v1/categorizer/%s/classify_
 ML_CLASSIFIER = 'MONKEYLEARN_CLASSIFIER'
 ML_AUTH = 'MONKEYLEARN_AUTH_TOKEN'
 ML_CLASSIFY_FIELDS = 'MONKEYLEARN_CLASSIFIER_FIELDS'
-ML_CATEGORY_FIELD = 'MONKEYLEARN_CATEGORY_FIELD'
+ML_CATEGORIES_FIELD = 'MONKEYLEARN_CATEGORIES_FIELD'
 
 
 def _classify_text(classifier, token, text):
@@ -56,7 +56,7 @@ class MonkeyLearnPipeline(object):
         self.classifier = crawler.settings[ML_CLASSIFIER]
         self.auth_token = crawler.settings[ML_AUTH]
         self.classifier_fields = crawler.settings[ML_CLASSIFY_FIELDS]
-        self.category_field = crawler.settings[ML_CATEGORY_FIELD]
+        self.categories_field = crawler.settings[ML_CATEGORIES_FIELD]
 
         # Validate options
         if not isinstance(self.classifier, str):
@@ -87,6 +87,10 @@ class MonkeyLearnPipeline(object):
             text = item[field_name]
             text_to_classify += text
         # Classify item
+        categories = _classify_text(classifier=self.classifier,
+                                    token=self.auth_token,
+                                    text=text_to_classify)
         # Store category
+        item[self.categories_field] = categories
         # Return item
         return item
