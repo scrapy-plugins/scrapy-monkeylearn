@@ -16,6 +16,21 @@ def _classify_text(classifier, text, token):
         }
     )
 
+class ConfigError(Exception):
+    """Raised when the value of a configuration option is different from the
+    expected one."""
+
+    def __init__(self, value, expected_type, found_type):
+        """Constructor."""
+        self.option_name = option_name
+        self.expected_type = expected_type
+        self.found_type = found_type
+
+    def __str__(self):
+        msg = "The value of %s should be of type %s, but found %s."
+        return msg % (self.option_name, self.expected_type, self.found_type)
+
+
 class MonkeyLearnPipeline(object):
     """A pipeline to classify items."""
 
@@ -25,8 +40,10 @@ class MonkeyLearnPipeline(object):
     category_field = None
 
     def __init__(self, crawler):
-        "Constructor, extract configuration information."
+        "Constructor."
         super(MonkeyLearnPipeline, self).__init__()
+
+        # Extract configuration
         self.classifier = crawler.settings[ML_CLASSIFIER]
         self.auth_token = crawler.settings[ML_AUTH]
         self.classifier_fields = crawler.settings[ML_CLASSIFY_FIELDS]
