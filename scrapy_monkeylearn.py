@@ -1,7 +1,7 @@
 import requests
 import json
 
-CLASSIFY_TEXT_URL = 'https://app.monkeylearn.com/api/v1/categorizer/%s/classify_text/'
+CLASSIFY_TEXT_URL = 'https://api.monkeylearn.com/api/v1/categorizer/%s/classify_text/'
 
 ML_CLASSIFIER = 'MONKEYLEARN_CLASSIFIER'
 ML_AUTH = 'MONKEYLEARN_AUTH_TOKEN'
@@ -20,7 +20,7 @@ def _classify_text(classifier, token, text):
             'text': text
         })
     )
-    return resp.json()
+    return resp.json()['result']
 
 
 class ConfigError(Exception):
