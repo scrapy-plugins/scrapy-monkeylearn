@@ -20,7 +20,7 @@ class ConfigError(Exception):
     """Raised when the value of a configuration option is different from the
     expected one."""
 
-    def __init__(self, value, expected_type, found_type):
+    def __init__(self, option_name, expected_type, found_type):
         """Constructor."""
         self.option_name = option_name
         self.expected_type = expected_type
@@ -28,7 +28,9 @@ class ConfigError(Exception):
 
     def __str__(self):
         msg = "The value of %s should be of type %s, but found %s."
-        return msg % (self.option_name, self.expected_type, self.found_type)
+        return msg % (self.option_name,
+                      self.expected_type.__name__,
+                      self.found_type.__name__)
 
 
 class MonkeyLearnPipeline(object):
@@ -48,6 +50,14 @@ class MonkeyLearnPipeline(object):
         self.auth_token = crawler.settings[ML_AUTH]
         self.classifier_fields = crawler.settings[ML_CLASSIFY_FIELDS]
         self.category_field = crawler.settings[ML_CATEGORY_FIELD]
+
+        # Validate options
+        if not isinstance(self.classifier, str):
+            raise ConfigError(option_name=ML_CLASSIFIER,
+                              expected_type=str,
+                              found_type=type(self.classifier)
+
+
 
     def process_item(self, item, spider):
         "Classify an item."
