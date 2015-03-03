@@ -5,7 +5,7 @@ ML_AUTH = 'MONKEYLEARN_AUTH_TOKEN'
 ML_CLASSIFY_FIELDS = 'MONKEYLEARN_CLASSIFIER_FIELDS'
 ML_CATEGORY_FIELD = 'MONKEYLEARN_CATEGORY_FIELD'
 
-def classify_text(classifier, text, token):
+def _classify_text(classifier, text, token):
     return requests.post(
         CLASSIFY_TEXT_URL % classifier,
         headers={
@@ -34,4 +34,9 @@ class MonkeyLearnPipeline(object):
 
     def process_item(self, item, spider):
         "Classify an item."
+        # Extract fields
+        text_to_classify = ""
+        # Classify item
+        # Store category
+        # Return item
         return item
