@@ -1,4 +1,4 @@
-# scrapy-monkeylearn
+# scrapy-monkeylearn [![Build Status](https://travis-ci.org/tryolabs/scrapy-monkeylearn.svg?branch=master)](https://travis-ci.org/tryolabs/scrapy-monkeylearn)
 
 A [Scrapy][scrapy] pipeline to categorize items using [MonkeyLearn][ml].
 
