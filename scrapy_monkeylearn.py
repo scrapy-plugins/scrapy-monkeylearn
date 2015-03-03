@@ -21,12 +21,16 @@ class MonkeyLearnPipeline(object):
 
     classifier = None
     auth_token = None
+    classifier_fields = None
+    category_field = None
 
     def __init__(self, crawler):
         "Constructor, extract configuration information."
         super(MonkeyLearnPipeline, self).__init__()
         self.classifier = crawler.settings[ML_CLASSIFIER]
         self.auth_token = crawler.settings[ML_AUTH]
+        self.classifier_fields = crawler.settings[ML_CLASSIFY_FIELDS]
+        self.category_field = crawler.settings[ML_CATEGORY_FIELD]
 
     def process_item(self, item, spider):
         "Classify an item."
