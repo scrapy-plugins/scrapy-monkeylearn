@@ -10,3 +10,12 @@ def classify_text(classifier, text, token):
             "text": text
         }
     )
+
+class MonkeyLearnPipeline(object):
+    """A pipeline to classify items."""
+
+    def __init__(self):
+        pass
+
+    def process_item(self, item, spider):
+        return item
