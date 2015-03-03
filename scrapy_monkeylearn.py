@@ -6,7 +6,7 @@ ML_CLASSIFY_FIELDS = 'MONKEYLEARN_CLASSIFIER_FIELDS'
 ML_CATEGORY_FIELD = 'MONKEYLEARN_CATEGORY_FIELD'
 
 def _classify_text(classifier, text, token):
-    return requests.post(
+    resp = requests.post(
         CLASSIFY_TEXT_URL % classifier,
         headers={
             "Authorization": "token " + token,
@@ -15,6 +15,7 @@ def _classify_text(classifier, text, token):
             "text": text
         }
     )
+    return resp.json()
 
 class ConfigError(Exception):
     """Raised when the value of a configuration option is different from the
@@ -55,7 +56,7 @@ class MonkeyLearnPipeline(object):
         if not isinstance(self.classifier, str):
             raise ConfigError(option_name=ML_CLASSIFIER,
                               expected_type=str,
-                              found_type=type(self.classifier)
+                              found_type=type(self.classifier))
 
         if not isinstance(self.auth_token, str):
             raise ConfigError(option_name=ML_AUTH,
@@ -76,6 +77,9 @@ class MonkeyLearnPipeline(object):
         "Classify an item."
         # Extract fields
         text_to_classify = ""
+        for field_name in self.classifier_fields:
+            text = item[field_name]
+            text_to_classify += text
         # Classify item
         # Store category
         # Return item
