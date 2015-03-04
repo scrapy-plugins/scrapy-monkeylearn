@@ -89,9 +89,12 @@ class MonkeyLearnPipeline(object):
             text = item[field_name]
             text_to_classify += text
         # Classify item
-        categories = _classify_text(classifier=self.classifier,
-                                    token=self.auth_token,
-                                    text=text_to_classify)
+        if self.debug:
+            categories = {}
+        else:
+            categories = _classify_text(classifier=self.classifier,
+                                        token=self.auth_token,
+                                        text=text_to_classify)
         # Store category
         item[self.categories_field] = categories
         # Return item
