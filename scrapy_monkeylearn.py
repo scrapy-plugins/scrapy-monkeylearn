@@ -7,6 +7,7 @@ ML_CLASSIFIER = 'MONKEYLEARN_CLASSIFIER'
 ML_AUTH = 'MONKEYLEARN_AUTH_TOKEN'
 ML_CLASSIFY_FIELDS = 'MONKEYLEARN_CLASSIFIER_FIELDS'
 ML_CATEGORIES_FIELD = 'MONKEYLEARN_CATEGORIES_FIELD'
+ML_DEBUG = 'MONKEYLEARN_DEBUG'
 
 
 def _classify_text(classifier, token, text):
@@ -57,6 +58,7 @@ class MonkeyLearnPipeline(object):
         self.auth_token = crawler.settings[ML_AUTH]
         self.classifier_fields = crawler.settings[ML_CLASSIFY_FIELDS]
         self.categories_field = crawler.settings[ML_CATEGORIES_FIELD]
+        self.debug = crawler.settings[ML_DEBUG]
 
         # Validate options
         if not isinstance(self.classifier, str):
