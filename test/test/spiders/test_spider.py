@@ -7,4 +7,4 @@ class TestSpider(scrapy.Spider):
     start_urls = ['http://www.example.com/']
 
     def parse(self, response):
-        yield MyItem(title='Test', desc='Test')
+        yield TestItem(title='Test', desc='Test')
