@@ -8,6 +8,8 @@ from scrapy import log, signals
 from scrapy.settings import Settings
 from test.spiders.test_spider import TestSpider
 
+from test.pipelines import DB
+
 class TestSimple(unittest.TestCase):
 
     def setUp(self):
@@ -17,12 +19,14 @@ class TestSimple(unittest.TestCase):
         self.crawler.signals.connect(reactor.stop, signal=signals.spider_closed)
         self.crawler.configure()
 
-
     def test_run(self):
         self.crawler.crawl(self.spider)
         self.crawler.start()
         log.start()
         reactor.run()
+
+    def test_item(self):
+        self.assertEqual(length(DB), 1)
 
 if __name__ == '__main__':
     unittest.main()
