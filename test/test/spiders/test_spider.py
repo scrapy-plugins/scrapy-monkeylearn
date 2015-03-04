@@ -1,5 +1,5 @@
 import scrapy
-from test.items import TestItem
+from test.test.items import TestItem
 
 class TestSpider(scrapy.Spider):
     name = 'test_spider'

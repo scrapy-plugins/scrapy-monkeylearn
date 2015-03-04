@@ -6,9 +6,8 @@ from twisted.internet import reactor
 from scrapy.crawler import Crawler
 from scrapy import log, signals
 from scrapy.settings import Settings
-from test.spiders.test_spider import TestSpider
-
-from test.pipelines import DB
+from test.test.spiders.test_spider import TestSpider
+from test.test.pipelines import DB
 
 class TestSimple(unittest.TestCase):
 
