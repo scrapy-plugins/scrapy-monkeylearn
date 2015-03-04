@@ -24,7 +24,7 @@ class TestSimple(unittest.TestCase):
         reactor.run()
 
     def test_item(self):
-        self.assertEqual(length(DB), 1)
+        self.assertEqual(len(DB), 1)
 
 if __name__ == '__main__':
     unittest.main()
