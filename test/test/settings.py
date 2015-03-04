@@ -12,5 +12,6 @@ MONKEYLEARN_CATEGORIES_FIELD = 'category'
 MONKEYLEARN_DEBUG = True
 
 ITEM_PIPELINES = {
-    'scrapy_monkeylearn.MonkeyLearnPipeline': 300,
+    'scrapy_monkeylearn.MonkeyLearnPipeline': 100,
+    'test.pipelines.StorePipeline': 200
 }
