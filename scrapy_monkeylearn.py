@@ -90,7 +90,7 @@ class MonkeyLearnPipeline(object):
             text_to_classify += text
         # Classify item
         if self.debug:
-            categories = [{'label':'None'}]
+            categories = [{'label': 'None'}]
         else:
             categories = _classify_text(classifier=self.classifier,
                                         token=self.auth_token,

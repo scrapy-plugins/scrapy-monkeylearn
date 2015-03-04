@@ -33,7 +33,7 @@ class TestSimple(unittest.TestCase):
         pipeline = MonkeyLearnPipeline(self.crawler)
         item = TestItem(title='test', desc='test')
         processed = pipeline.process_item(item, None)
-        self.assertEqual(processed['category'], [{'label':'None'}])
+        self.assertEqual(processed['category'], [{'label': 'None'}])
 
 if __name__ == '__main__':
     unittest.main()
