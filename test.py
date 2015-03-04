@@ -3,10 +3,16 @@ import os
 
 from twisted.internet import reactor
 from scrapy.crawler import Crawler
-from scrapy import log, signals
+from scrapy import log, signals, Item, Field
 from scrapy.settings import Settings
 
 from scrapy_monkeylearn import MonkeyLearnPipeline
+
+
+class TestItem(Item):
+    title = Field()
+    desc = Field()
+    category = Field()
 
 
 class TestSimple(unittest.TestCase):
@@ -23,8 +29,11 @@ class TestSimple(unittest.TestCase):
         self.crawler = Crawler(settings)
         self.crawler.configure()
 
-    def test_create_pipeline(self):
-        self.pipeline = MonkeyLearnPipeline(self.crawler)
+    def test_process_item(self):
+        pipeline = MonkeyLearnPipeline(self.crawler)
+        item = TestItem(title='test', desc='test')
+        processed = pipeline.process_item(item, None)
+        self.assertEqual(processed['category'], [{'label':'None'}])
 
 if __name__ == '__main__':
     unittest.main()
