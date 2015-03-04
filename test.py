@@ -11,7 +11,7 @@ from test.spiders.test_spider import TestSpider
 class TestSimple(unittest.TestCase):
 
     def setUp(self):
-        os.environ.setdefault('SCRAPY_SETTINGS_MODULE', 'myprojectdir.settings')
+        os.environ.setdefault('SCRAPY_SETTINGS_MODULE', 'test.settings')
         self.spider = TestSpider()
         self.crawler = Crawler(Settings())
         self.crawler.signals.connect(reactor.stop, signal=signals.spider_closed)
