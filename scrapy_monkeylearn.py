@@ -76,7 +76,7 @@ class MonkeyLearnPipeline(object):
                               expected_type=list,
                               found_type=type(self.classifier_fields))
 
-        if not isinstance(self.category_field, str):
+        if not isinstance(self.categories_field, str):
             raise ConfigError(option_name=ML_CATEGORIES_FIELD,
                               expected_type=str,
                               found_type=type(self.category_field))
