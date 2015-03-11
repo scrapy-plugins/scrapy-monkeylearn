@@ -11,7 +11,7 @@ A [Scrapy][scrapy] pipeline to categorize items using [MonkeyLearn][ml].
 `MONKEYLEARN_CLASSIFIER_FIELDS` | A list of Item text fields to use for classification. | `['title', 'desc']`
 `MONKEYLEARN_CATEGORIES_FIELD`  | The field where the category will be stored.          | `'categories'`
 
-An example value of the `MONKEYLEARN_CATEGORY_FIELD` field after classification
+An example value of the `MONKEYLEARN_CATEGORIES_FIELD` field after classification
 is: `[{'label': 'English', 'probability': 0.321}]`.
 
 # License
