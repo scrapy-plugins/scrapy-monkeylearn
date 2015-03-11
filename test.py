@@ -30,7 +30,7 @@ class TestSimple(unittest.TestCase):
         self.crawler.configure()
 
     def test_process_item(self):
-        pipeline = MonkeyLearnPipeline(self.crawler)
+        pipeline = MonkeyLearnPipeline.from_crawler(self.crawler)
         item = TestItem(title='test', desc='test')
         processed = pipeline.process_item(item, None)
         self.assertEqual(processed['category'], [{'label': 'None'}])
