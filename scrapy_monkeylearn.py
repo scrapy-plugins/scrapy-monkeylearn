@@ -88,10 +88,8 @@ class MonkeyLearnPipeline(object):
     def process_item(self, item, spider):
         "Classify an item."
         # Extract fields
-        text_to_classify = ""
-        for field_name in self.classifier_fields:
-            text = item[field_name]
-            text_to_classify += text
+        text_to_classify = ' '.join([item[field_name]
+                                     for field_name in self.classifier_fields])
         # Classify item
         if self.debug:
             categories = [{'label': 'None'}]
