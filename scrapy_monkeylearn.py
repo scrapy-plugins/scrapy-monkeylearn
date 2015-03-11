@@ -49,16 +49,20 @@ class MonkeyLearnPipeline(object):
     classifier_fields = None
     category_field = None
 
-    def __init__(self, crawler):
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(crawler.settings)
+
+    def __init__(self, settings):
         "Constructor."
         super(MonkeyLearnPipeline, self).__init__()
 
         # Extract configuration
-        self.classifier = crawler.settings[ML_CLASSIFIER]
-        self.auth_token = crawler.settings[ML_AUTH]
-        self.classifier_fields = crawler.settings[ML_CLASSIFY_FIELDS]
-        self.categories_field = crawler.settings[ML_CATEGORIES_FIELD]
-        self.debug = crawler.settings[ML_DEBUG]
+        self.classifier = settings[ML_CLASSIFIER]
+        self.auth_token = settings[ML_AUTH]
+        self.classifier_fields = settings[ML_CLASSIFY_FIELDS]
+        self.categories_field = settings[ML_CATEGORIES_FIELD]
+        self.debug = settings[ML_DEBUG]
 
         # Validate options
         if not isinstance(self.classifier, str):
