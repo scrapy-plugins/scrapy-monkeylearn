@@ -1,8 +1,7 @@
 import unittest
 
-from twisted.internet import reactor
 from scrapy.crawler import Crawler
-from scrapy import log, signals, Item, Field
+from scrapy import Item, Field
 from scrapy.settings import Settings
 
 from scrapy_monkeylearn import MonkeyLearnPipeline
