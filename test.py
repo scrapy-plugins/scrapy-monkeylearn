@@ -1,5 +1,4 @@
 import unittest
-import os
 
 from twisted.internet import reactor
 from scrapy.crawler import Crawler
