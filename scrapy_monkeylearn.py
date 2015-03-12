@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+
+"""This module implements a Scrapy Pipeline that extracts text from Scrapy
+Items, classifies them using MonkeyLearn, then stores the category in the Item.
+
+"""
+
 import requests
 import json
 
