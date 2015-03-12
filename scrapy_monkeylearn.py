@@ -11,6 +11,7 @@ ML_DEBUG = 'MONKEYLEARN_DEBUG'
 
 
 def _classify_text(classifier, token, text):
+    """Send a request to MonkeyLearn to classify some text."""
     resp = requests.post(
         CLASSIFY_TEXT_URL % classifier,
         headers={
