@@ -1,2 +1,2 @@
-scrapy==0.24.5
-requests
+-e git+https://github.com/scrapy/scrapy.git@ed84231b60c3ae6f32e87d8ba85eacfba56ea606#egg=Scrapy-dev
+pytest==2.6.4
