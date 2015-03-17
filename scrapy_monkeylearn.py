@@ -33,7 +33,7 @@ class ConfigError(Exception):
 class MonkeyLearnPipeline(object):
     """A pipeline to classify items."""
 
-    log_header = '[MonkeyLearnPipeline] '
+    log_header = u'[MonkeyLearnPipeline] {}'
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -56,7 +56,7 @@ class MonkeyLearnPipeline(object):
                 self.auth_token,
                 self.classifier_fields,
                 self.categories_field)):
-            raise NotConfigured('missing options')
+            raise NotConfigured('required options missing')
 
         # Validate options
         if not isinstance(self.classifier, str):
@@ -87,14 +87,16 @@ class MonkeyLearnPipeline(object):
         return dfd
 
     def _make_request(self, item, spider):
-        text_to_classify = u' '.join([item[field_name]
-                                     for field_name in self.classifier_fields])
+        text_to_classify = u' '.join(
+            filter(
+                None,
+                [item.get(field_name) for field_name in self.classifier_fields]))
         body = json.dumps({'text': text_to_classify})
         request = scrapy.Request(
             CLASSIFY_TEXT_URL.format(classifier=self.classifier),
             method='POST',
             headers={
-                'Authorization': 'Token {}'.format(self.auth_token),
+                'Authorization': u'Token {}'.format(self.auth_token),
                 'Content-Type': 'application/json'},
             body=body)
         self.crawler.stats.inc_value('monkeylearn_api/requests_count')
@@ -106,7 +108,8 @@ class MonkeyLearnPipeline(object):
             'monkeylearn_api/response_status_count/{}'.format(response.status))
         if response.status != 200:
             scrapy.log.msg(
-                self.log_header % 'Non 200 response from api {0}'.format(response.url),
+                self.log_header.format(
+                    'Non 200 response from api {0}'.format(response.url)),
                 scrapy.log.ERROR)
             return item
 
@@ -116,7 +119,7 @@ class MonkeyLearnPipeline(object):
         return item
 
     def handle_error(self, failure, item):
-        message = 'error when parsing api response {0} Traceback'.format(item.get('url'))
-        message += failure.getBriefTraceback()
-        scrapy.log.err(self.log_header + message)
+        message = u'error when parsing api response {0} Traceback'.format(item.get('url'))
+        message = u'{} {}'.format(message, failure.getBriefTraceback())
+        scrapy.log.err(self.log_header.format(message))
         return item
