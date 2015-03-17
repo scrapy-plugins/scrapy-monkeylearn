@@ -36,7 +36,7 @@ class MonkeyLearnPipelineTest(unittest.TestCase):
         self.crawler.engine = Mock()
         self.crawler.engine.download = Mock(return_value=Deferred())
         # workaround to set crawler during instantiation
-        self.spider = TestSpider.from_crawler(self.crawler)
+        self.spider = TestSpider().set_crawler(self.crawler)
         self.item = TestItem({
             'title': u'Foo bar',
             'desc': u'For Guido\'s sake'})
