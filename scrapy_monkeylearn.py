@@ -86,11 +86,14 @@ class MonkeyLearnPipeline(object):
         dfd.addErrback(self.handle_error, item)
         return dfd
 
+    def _get_text(self, item):
+        """Extract a space-separated string of the text of all fields to be
+        classified."""
+        fields = (item.get(field_name) for field_name in self.classifier_fields)
+        return u' '.join(filter(None, fields))
+
     def _make_request(self, item, spider):
-        text_to_classify = u' '.join(
-            filter(
-                None,
-                [item.get(field_name) for field_name in self.classifier_fields]))
+        text_to_classify = _get_text(self, item)
         body = json.dumps({'text': text_to_classify})
         request = scrapy.Request(
             CLASSIFY_TEXT_URL.format(classifier=self.classifier),
