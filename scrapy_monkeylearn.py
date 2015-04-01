@@ -77,7 +77,7 @@ class MonkeyLearnPipeline(object):
         if not isinstance(self.categories_field, str):
             raise ConfigError(option_name=ML_CATEGORIES_FIELD,
                               expected_type=str,
-                              found_type=type(self.category_field))
+                              found_type=type(self.categories_field))
 
     def process_item(self, item, spider):
         request = self._make_request(item, spider)
@@ -93,7 +93,7 @@ class MonkeyLearnPipeline(object):
         return u' '.join(filter(None, fields))
 
     def _make_request(self, item, spider):
-        text_to_classify = _get_text(self, item)
+        text_to_classify = self._get_text(item)
         body = json.dumps({'text': text_to_classify})
         request = scrapy.Request(
             CLASSIFY_TEXT_URL.format(classifier=self.classifier),
