@@ -7,6 +7,7 @@ from scrapy.exceptions import NotConfigured
 
 CLASSIFY_TEXT_URL = 'https://api.monkeylearn.com/api/v1/categorizer/{classifier}/classify_text/'
 
+ML_ENABLED = 'MONKEYLEARN_ENABLED'
 ML_CLASSIFIER = 'MONKEYLEARN_CLASSIFIER'
 ML_AUTH = 'MONKEYLEARN_AUTH_TOKEN'
 ML_CLASSIFY_FIELDS = 'MONKEYLEARN_CLASSIFIER_FIELDS'
@@ -45,6 +46,9 @@ class MonkeyLearnPipeline(object):
         self.crawler = crawler
 
         # Extract configuration
+        self.enabled = crawler.settings.get(ML_ENABLED, True)
+        if not self.enabled:
+            raise NotConfigured('Monkeylearn disabled')
         self.classifier = crawler.settings.get(ML_CLASSIFIER)
         self.auth_token = crawler.settings.get(ML_AUTH)
         self.classifier_fields = crawler.settings.get(ML_CLASSIFY_FIELDS)
