@@ -116,7 +116,10 @@ class MonkeyLearnPipeline(object):
         if response.status != 200:
             scrapy.log.msg(
                 self.log_header.format(
-                    'Non 200 response from api {0}'.format(response.url)),
+                    'Non 200 response from api {0}. The response status was {1}'.format(
+                        response.url,
+                        response.status,
+                    )),
                 scrapy.log.ERROR)
             return item
 
