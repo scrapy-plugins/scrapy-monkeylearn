@@ -15,6 +15,16 @@ A [Scrapy][scrapy] pipeline to categorize items using [MonkeyLearn][ml].
 An example value of the `MONKEYLEARN_CATEGORIES_FIELD` field after classification
 is: `[{'label': 'English', 'probability': 0.321}]`.
 
+# Usage
+
+Add `MonkeyLearnPipeline` to your pipelines and give it an order value, e.g.:
+
+```python
+ITEM_PIPELINES = {
+    'scrapy_monkeylearn.pipelines.MonkeyLearnPipeline': 100,
+}
+```
+
 # License
 
 Copyright (c) 2015 [Tryolabs][tryo] SRL.
