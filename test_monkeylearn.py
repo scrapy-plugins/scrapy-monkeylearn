@@ -9,7 +9,7 @@ from scrapy.utils.test import get_crawler
 from twisted.internet.defer import Deferred
 from twisted.trial import unittest
 
-from scrapy_monkeylearn import MonkeyLearnPipeline
+from scrapy_monkeylearn.pipelines import MonkeyLearnPipeline
 
 
 class TestSpider(Spider):

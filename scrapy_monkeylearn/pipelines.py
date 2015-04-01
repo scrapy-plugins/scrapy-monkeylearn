@@ -7,6 +7,7 @@ from scrapy.exceptions import NotConfigured
 
 CLASSIFY_TEXT_URL = 'https://api.monkeylearn.com/api/v1/categorizer/{classifier}/classify_text/'
 
+ML_ENABLED = 'MONKEYLEARN_ENABLED'
 ML_CLASSIFIER = 'MONKEYLEARN_CLASSIFIER'
 ML_AUTH = 'MONKEYLEARN_AUTH_TOKEN'
 ML_CLASSIFY_FIELDS = 'MONKEYLEARN_CLASSIFIER_FIELDS'
@@ -45,6 +46,9 @@ class MonkeyLearnPipeline(object):
         self.crawler = crawler
 
         # Extract configuration
+        self.enabled = crawler.settings.get(ML_ENABLED, True)
+        if not self.enabled:
+            raise NotConfigured('Monkeylearn disabled')
         self.classifier = crawler.settings.get(ML_CLASSIFIER)
         self.auth_token = crawler.settings.get(ML_AUTH)
         self.classifier_fields = crawler.settings.get(ML_CLASSIFY_FIELDS)
@@ -77,7 +81,7 @@ class MonkeyLearnPipeline(object):
         if not isinstance(self.categories_field, str):
             raise ConfigError(option_name=ML_CATEGORIES_FIELD,
                               expected_type=str,
-                              found_type=type(self.category_field))
+                              found_type=type(self.categories_field))
 
     def process_item(self, item, spider):
         request = self._make_request(item, spider)
@@ -93,7 +97,7 @@ class MonkeyLearnPipeline(object):
         return u' '.join(filter(None, fields))
 
     def _make_request(self, item, spider):
-        text_to_classify = _get_text(self, item)
+        text_to_classify = self._get_text(item)
         body = json.dumps({'text': text_to_classify})
         request = scrapy.Request(
             CLASSIFY_TEXT_URL.format(classifier=self.classifier),
