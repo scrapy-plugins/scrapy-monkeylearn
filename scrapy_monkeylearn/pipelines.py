@@ -51,7 +51,7 @@ class MonkeyLearnPipeline(object):
             raise NotConfigured('Monkeylearn disabled')
         self.classifier = crawler.settings.get(ML_CLASSIFIER)
         self.auth_token = crawler.settings.get(ML_AUTH)
-        self.classifier_fields = crawler.settings.get(ML_CLASSIFY_FIELDS)
+        self.classifier_fields = crawler.settings.getlist(ML_CLASSIFY_FIELDS)
         self.categories_field = crawler.settings.get(ML_CATEGORIES_FIELD)
 
         # Check required options
