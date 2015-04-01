@@ -51,7 +51,7 @@ class MonkeyLearnPipeline(object):
             raise NotConfigured('Monkeylearn disabled')
         self.classifier = crawler.settings.get(ML_CLASSIFIER)
         self.auth_token = crawler.settings.get(ML_AUTH)
-        self.classifier_fields = crawler.settings.get(ML_CLASSIFY_FIELDS)
+        self.classifier_fields = crawler.settings.getlist(ML_CLASSIFY_FIELDS)
         self.categories_field = crawler.settings.get(ML_CATEGORIES_FIELD)
 
         # Check required options
@@ -116,7 +116,10 @@ class MonkeyLearnPipeline(object):
         if response.status != 200:
             scrapy.log.msg(
                 self.log_header.format(
-                    'Non 200 response from api {0}'.format(response.url)),
+                    'Non 200 response from api {0}. The response status was {1}'.format(
+                        response.url,
+                        response.status,
+                    )),
                 scrapy.log.ERROR)
             return item
 
