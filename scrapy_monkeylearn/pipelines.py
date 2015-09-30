@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 import json
 import scrapy
+import logging
 
 from scrapy.exceptions import NotConfigured
 
 
-CLASSIFY_TEXT_URL = 'https://api.monkeylearn.com/api/v1/categorizer/{classifier}/classify_text/'
+CLASSIFY_TEXT_URL = 'https://api.monkeylearn.com/v2/classifiers/{classifier}/classify/?'
 
 ML_ENABLED = 'MONKEYLEARN_ENABLED'
 ML_CLASSIFIER = 'MONKEYLEARN_CLASSIFIER'
@@ -93,12 +94,12 @@ class MonkeyLearnPipeline(object):
     def _get_text(self, item):
         """Extract a space-separated string of the text of all fields to be
         classified."""
-        fields = (item.get(field_name) for field_name in self.classifier_fields)
-        return u' '.join(filter(None, fields))
+        fields = [item.get(field_name) for field_name in self.classifier_fields]
+        return u' '.join(fields)
 
     def _make_request(self, item, spider):
         text_to_classify = self._get_text(item)
-        body = json.dumps({'text': text_to_classify})
+        body = json.dumps({'text_list': [text_to_classify]})
         request = scrapy.Request(
             CLASSIFY_TEXT_URL.format(classifier=self.classifier),
             method='POST',
@@ -114,13 +115,13 @@ class MonkeyLearnPipeline(object):
         self.crawler.stats.inc_value(
             'monkeylearn_api/response_status_count/{}'.format(response.status))
         if response.status != 200:
-            scrapy.log.msg(
+            logging.error(
                 self.log_header.format(
                     'Non 200 response from api {0}. The response status was {1}'.format(
                         response.url,
                         response.status,
-                    )),
-                scrapy.log.ERROR)
+                    ))
+            )
             return item
 
         json_data = json.loads(response.body)
@@ -131,5 +132,5 @@ class MonkeyLearnPipeline(object):
     def handle_error(self, failure, item):
         message = u'error when parsing api response {0} Traceback'.format(item.get('url'))
         message = u'{} {}'.format(message, failure.getBriefTraceback())
-        scrapy.log.err(self.log_header.format(message))
+        logging.error(self.log_header.format(message))
         return item

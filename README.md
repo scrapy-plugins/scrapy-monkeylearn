@@ -7,9 +7,9 @@ A [Scrapy][scrapy] pipeline to categorize items using [MonkeyLearn][ml].
          Option Name            |                         Value                         |    Example Value
 ------------------------------- | ----------------------------------------------------- | -------------------
 `MONKEYLEARN_ENABLED`           | Whether to enable monkeylearn extension. Default=True | `True`
-`MONKEYLEARN_CLASSIFIER`        | The ID of the classifier.                             | `'cl_0123abcd'`
+`MONKEYLEARN_CLASSIFIER`        | The ID of the classifier.                             | `'cl_oFKL5wft'`
 `MONKEYLEARN_AUTH_TOKEN`        | The auth token.                                       | `'TWFuIGlzIGRp...'`
-`MONKEYLEARN_CLASSIFIER_FIELDS` | A list of Item text fields to use for classification. | `['title', 'desc']`
+`MONKEYLEARN_CLASSIFIER_FIELDS` | A list of Item text fields to use for classification. | `['title', 'description']`
 `MONKEYLEARN_CATEGORIES_FIELD`  | The field where the category will be stored.          | `'categories'`
 
 An example value of the `MONKEYLEARN_CATEGORIES_FIELD` field after classification
@@ -27,7 +27,7 @@ ITEM_PIPELINES = {
 
 # License
 
-Copyright (c) 2015 [Tryolabs][tryo] SRL.
+Copyright (c) 2015 [MonkeyLearn][ml].
 
 Released under the MIT license.
 
