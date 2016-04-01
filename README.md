@@ -1,27 +1,28 @@
-# scrapy-monkeylearn [![Build Status](https://travis-ci.org/tryolabs/scrapy-monkeylearn.svg?branch=master)](https://travis-ci.org/tryolabs/scrapy-monkeylearn)
+# scrapy-monkeylearn
 
-A [Scrapy][scrapy] pipeline to categorize items using [MonkeyLearn][ml].
+A [Scrapy][scrapy] middleware to categorize items using [MonkeyLearn][ml].
 
 # Settings
 
          Option Name            |                         Value                         |    Example Value
 ------------------------------- | ----------------------------------------------------- | -------------------
-`MONKEYLEARN_ENABLED`           | Whether to enable monkeylearn extension. Default=True | `True`
-`MONKEYLEARN_CLASSIFIER`        | The ID of the classifier.                             | `'cl_oFKL5wft'`
-`MONKEYLEARN_AUTH_TOKEN`        | The auth token.                                       | `'TWFuIGlzIGRp...'`
-`MONKEYLEARN_CLASSIFIER_FIELDS` | A list of Item text fields to use for classification. | `['title', 'description']`
-`MONKEYLEARN_CATEGORIES_FIELD`  | The field where the category will be stored.          | `'categories'`
+`MONKEYLEARN_BATCH_SIZE`           | The size of the item batches sent to MonkeyLearn. Default=200 | `200`
+`MONKEYLEARN_MODULE`        | The ID of the monkeylearn module.                             | `'cl_oFKL5wft'`
+`MONKEYLEARN_USE_SANDBOX`        | In case of using a classifier, if the sandbox version should be used. Default=False                             | `False`
+`MONKEYLEARN_TOKEN`        | The auth token.                                       | `'TWFuIGlzIGRp...'`
+`MONKEYLEARN_FIELD_TO_CLASSIFY` | A field or list of Item text fields to use for classification. | `['title', 'description']`
+`MONKEYLEARN_FIELD_CLASSIFICATION_OUTPUT`  | The field where the category will be stored.          | `'categories'`
 
-An example value of the `MONKEYLEARN_CATEGORIES_FIELD` field after classification
+An example value of the `MONKEYLEARN_FIELD_CLASSIFICATION_OUTPUT` field after classification
 is: `[{'label': 'English', 'probability': 0.321}]`.
 
 # Usage
 
-Add `MonkeyLearnPipeline` to your pipelines and give it an order value, e.g.:
+In your settings.py file, add the previously described settings and add `MonkeylearnMiddleware` to your middlewares, e.g.:
 
 ```python
-ITEM_PIPELINES = {
-    'scrapy_monkeylearn.pipelines.MonkeyLearnPipeline': 100,
+SPIDER_MIDDLEWARES = {
+    'scrapy_monkeylearn.middlewares.MonkeylearnMiddleware': 1000,
 }
 ```
 
@@ -33,4 +34,3 @@ Released under the MIT license.
 
 [scrapy]: http://scrapy.org/
 [ml]: http://www.monkeylearn.com/
-[tryo]: http://tryolabs.com/

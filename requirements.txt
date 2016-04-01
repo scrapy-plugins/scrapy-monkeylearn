@@ -1,3 +1,2 @@
-Scrapy==1.0.3
-mock==1.0.1
-pytest==2.6.4
+Scrapy==1.0.5
+monkeylearn==0.2.4
