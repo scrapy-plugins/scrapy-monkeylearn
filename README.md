@@ -10,10 +10,10 @@ A [Scrapy][scrapy] middleware to categorize items using [MonkeyLearn][ml].
 `MONKEYLEARN_MODULE`        | The ID of the monkeylearn module.                             | `'cl_oFKL5wft'`
 `MONKEYLEARN_USE_SANDBOX`        | In case of using a classifier, if the sandbox version should be used. Default=False                             | `False`
 `MONKEYLEARN_TOKEN`        | The auth token.                                       | `'TWFuIGlzIGRp...'`
-`MONKEYLEARN_FIELD_TO_CLASSIFY` | A field or list of Item text fields to use for classification. | `['title', 'description']`
-`MONKEYLEARN_FIELD_CLASSIFICATION_OUTPUT`  | The field where the category will be stored.          | `'categories'`
+`MONKEYLEARN_FIELD_TO_PROCESS` | A field or list of Item text fields to use for classification. | `['title', 'description']`
+`MONKEYLEARN_FIELD_OUTPUT`  | The field where the MonkeyLearn output will be stored.          | `'categories'`
 
-An example value of the `MONKEYLEARN_FIELD_CLASSIFICATION_OUTPUT` field after classification
+An example value of the `MONKEYLEARN_FIELD_OUTPUT` field after classification
 is: `[{'label': 'English', 'probability': 0.321}]`.
 
 # Usage

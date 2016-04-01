@@ -21,14 +21,14 @@ class MonkeylearnMiddleware(object):
         # NotConfigured otherwise
         if (not crawler.settings.get('MONKEYLEARN_TOKEN') or
                 not crawler.settings.get('MONKEYLEARN_MODULE') or
-                not crawler.settings.get('MONKEYLEARN_FIELD_CLASSIFICATION_OUTPUT') or
-                not crawler.settings.get('MONKEYLEARN_FIELD_TO_CLASSIFY')):
+                not crawler.settings.get('MONKEYLEARN_FIELD_OUTPUT') or
+                not crawler.settings.get('MONKEYLEARN_FIELD_TO_PROCESS')):
             raise NotConfigured
 
         token = crawler.settings.get('MONKEYLEARN_TOKEN')
         module_id = crawler.settings.get('MONKEYLEARN_MODULE')
-        field_to_classify = crawler.settings.get('MONKEYLEARN_FIELD_TO_CLASSIFY')
-        field_classification_output = crawler.settings.get('MONKEYLEARN_FIELD_CLASSIFICATION_OUTPUT')
+        field_to_classify = crawler.settings.get('MONKEYLEARN_FIELD_TO_PROCESS')
+        field_classification_output = crawler.settings.get('MONKEYLEARN_FIELD_OUTPUT')
         batch_size = crawler.settings.get('MONKEYLEARN_BATCH_SIZE', 200)
         use_sandbox = crawler.settings.get('MONKEYLEARN_USE_SANDBOX', False)
 
