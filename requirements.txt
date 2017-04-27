@@ -1,2 +1,3 @@
 Scrapy==1.0.5
 monkeylearn==0.2.4
+six>=1.5.2
