@@ -22,7 +22,7 @@ class MonkeyLearnPipeline(object):
         self.module_id = module_id
         self.ml = MonkeyLearn(token)
         if isinstance(fields_to_classify, six.string_types):
-            fields_to_classify = [fields_to_classify]
+            fields_to_classify = [x.strip() for x in fields_to_classify.split(',')]
         elif not isinstance(fields_to_classify, (list, tuple)):
             fields_to_classify = []
         self.fields_to_classify = fields_to_classify
